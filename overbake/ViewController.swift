@@ -66,14 +66,14 @@ final class GameViewModel {
             if self.status == .inProgress {
                 let interval = Int(date.timeIntervalSince(self.startTime))
                 self.timerLabelText.value = String(interval)
-                if interval <= 3 {
+                if interval <= 2 {
                     self.pizzaStatusText.value = "No cooked...😑"
-                } else if interval <= 6 {
+                } else if interval <= 4 {
                     self.pizzaColor.value = UIColor(red: 1, green: 0.8627, blue: 0.6588, alpha: 1.0)
-                } else if interval < 9 {
+                } else if interval < 6 {
                     self.pizzaStatusText.value = "About right!🤤"
                     self.pizzaColor.value = UIColor(red: 0.9176, green: 0.6275, blue: 0.2745, alpha: 1.0)
-                } else if interval < 12 {
+                } else if interval < 8 {
                     self.pizzaStatusText.value = "Crispy!😎"
                     self.pizzaColor.value = UIColor(red: 0.7098, green: 0.5294, blue: 0, alpha: 1.0)
                 } else {
@@ -125,9 +125,11 @@ class ViewController: UIViewController {
 
         instructionLabel.reactive.text <~ vm.gameStateLabelText
         gameStartButton.reactive.title <~ vm.gameStartButtonText
+        // testing pizza status label
         pizzaStatus.reactive.text <~ vm.pizzaStatusText
         pizzaStatus.isHidden = true
-        //timerLabel.reactive.text <~ vm.timerLabelText
+        timerLabel.reactive.text <~ vm.timerLabelText
+        // testing timer label
         timerLabel.isHidden = true
         let tintedImage = pizzaImage?.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         pizzaImage.image = tintedImage
