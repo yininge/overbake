@@ -19,7 +19,7 @@ enum GameState {
 
 final class GameViewModel {
     let nextGameStateAction: Action<GameState, GameState, NoError>
-    let setTimeAction: Action<(), Date, NoError>
+    let startGameAction: Action<(), Date, NoError>
     
     var gameStateLabelText: MutableProperty<String>
     var gameStartButtonText: MutableProperty<String>
@@ -39,11 +39,13 @@ final class GameViewModel {
         status = .none
         startTime = Date()
 
+        // trigger startGameAction after 1 second
         let timerSignalProducer: () -> SignalProducer<Date, NoError> = {
             return SignalProducer.timer(interval: DispatchTimeInterval.seconds(1), on: QueueScheduler.main)
         }
-        setTimeAction = Action<(), Date, NoError>(execute: timerSignalProducer)
+        startGameAction = Action<(), Date, NoError>(execute: timerSignalProducer)
         
+        // trigger nextGameStateAction whenever game state change
         let nextGameStateSignalProducer: (GameState) -> SignalProducer<GameState, NoError>  = { status in
             return SignalProducer<GameState, NoError> { (observer, lifetime) in
                 switch status {
@@ -61,8 +63,8 @@ final class GameViewModel {
         }
         nextGameStateAction = Action<GameState, GameState, NoError>(execute: nextGameStateSignalProducer)
         
-        // set observe values
-        setTimeAction.values.observeValues { (date) in
+        // this is being evaluated after 1 second, and mutate necessary value: pizza status text and color
+        startGameAction.values.observeValues { (date) in
             if self.status == .inProgress {
                 let interval = Int(date.timeIntervalSince(self.startTime))
                 self.timerLabelText.value = String(interval)
@@ -87,13 +89,14 @@ final class GameViewModel {
             }
         }
         
+        // this is being evaluated whenever game state change, and mutate necessary value: game button text and game process text
         nextGameStateAction.values.observeValues { value in
             switch value {
             case .none:
                 self.gameStartButtonText.value = "Start Baking!"
                 self.gameStateLabelText.value = ""
             case .inProgress:
-                self.setTimeAction.apply().start()
+                self.startGameAction.apply().start()
                 self.pizzaColor.value = UIColor(red: 1, green: 0.8627, blue: 0.6588, alpha: 1.0)
                 self.startTime = Date()
                 
@@ -111,9 +114,7 @@ final class GameViewModel {
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
-    @IBOutlet weak var pizzaStatus: UILabel!
     @IBOutlet weak var gameStartButton: UIButton!
     @IBOutlet weak var pizzaImage: UIImageView!
     
@@ -125,16 +126,10 @@ class ViewController: UIViewController {
 
         instructionLabel.reactive.text <~ vm.gameStateLabelText
         gameStartButton.reactive.title <~ vm.gameStartButtonText
-        // testing pizza status label
-        pizzaStatus.reactive.text <~ vm.pizzaStatusText
-        pizzaStatus.isHidden = true
-        timerLabel.reactive.text <~ vm.timerLabelText
-        // testing timer label
-        timerLabel.isHidden = true
+        
         let tintedImage = pizzaImage?.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         pizzaImage.image = tintedImage
         pizzaImage.reactive.tintColor <~ vm.pizzaColor
-        
     }
 
     @IBAction func tapStartButton(_ sender: Any) {

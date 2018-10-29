@@ -29,17 +29,8 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PizzaStatus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3a-wC-mBu">
-                                        <rect key="frame" x="72" y="60" width="131.5" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="sln-QO-Lm6"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noun_Pizza_1483204" translatesAutoresizingMaskIntoConstraints="NO" id="oyY-qN-hjY">
-                                        <rect key="frame" x="0.0" y="120" width="275" height="427"/>
+                                        <rect key="frame" x="0.0" y="60" width="275" height="487"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
@@ -47,7 +38,7 @@
                                 <rect key="frame" x="50" y="573" width="275" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJc-Wv-Dl2">
-                                        <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="275" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="Start">
                                             <color key="titleColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,12 +47,6 @@
                                             <action selector="tapStartButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5v3-WK-GsQ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ff5-c0-VL0">
-                                        <rect key="frame" x="211" y="6.5" width="64" height="31.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -81,8 +66,6 @@
                         <outlet property="gameStartButton" destination="wJc-Wv-Dl2" id="wHh-u7-MVM"/>
                         <outlet property="instructionLabel" destination="pTJ-ua-OBk" id="V4V-4h-RW8"/>
                         <outlet property="pizzaImage" destination="oyY-qN-hjY" id="BId-Qn-cnD"/>
-                        <outlet property="pizzaStatus" destination="d3a-wC-mBu" id="tq1-uF-aRt"/>
-                        <outlet property="timerLabel" destination="ff5-c0-VL0" id="gAj-2T-97Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
